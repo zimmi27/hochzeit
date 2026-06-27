@@ -130,10 +130,11 @@ button{
 }
 
 /* PARALLAX */
-#parallax{
-  position:fixed;
-  inset:0;
-  z-index:-1;
+#parallax {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
 }
 
 .layer{
