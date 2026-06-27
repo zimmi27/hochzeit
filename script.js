@@ -1,94 +1,84 @@
-const images = [
-  {src:"images/1.jpg", drunk:true},
-  {src:"images/2.jpg", drunk:true},
-  {src:"images/3.jpg", drunk:true},
-  {src:"images/4.jpg", drunk:true},
-  {src:"images/5.jpg", drunk:true},
-  {src:"images/6.jpg", drunk:true},
-  {src:"images/7.jpg", drunk:true},
-  {src:"images/8.jpg", drunk:true},
-  {src:"images/9.jpg", drunk:true},
+let images = [
+  {src:"images/1.jpg", drunk:true, chosen:false},
+  {src:"images/2.jpg", drunk:true, chosen:false},
+  {src:"images/3.jpg", drunk:true, chosen:false},
+  {src:"images/4.jpg", drunk:true, chosen:false},
+  {src:"images/5.jpg", drunk:true, chosen:false},
+  {src:"images/6.jpg", drunk:true, chosen:false},
+  {src:"images/7.jpg", drunk:true, chosen:false},
+  {src:"images/8.jpg", drunk:true, chosen:false},
+  {src:"images/9.jpg", drunk:true, chosen:false},
 ];
 
-let selected = [];
-let currentTask = "";
-let wrongCount = 0;
+let lastClick = 0;
+let wrong = 0;
 
 /* LOADING */
-let p = 0;
-let load = setInterval(()=>{
-  p += 5;
-  document.querySelector(".barFill").style.width = p + "%";
-  document.getElementById("loadText").innerText = p + "%";
-
-  if(p >= 100){
+let p=0;
+let load=setInterval(()=>{
+  p+=5;
+  document.querySelector(".barFill").style.width=p+"%";
+  document.getElementById("loadText").innerText=p+"%";
+  if(p>=100){
     clearInterval(load);
     document.getElementById("loading").style.display="none";
-    startCaptcha();
+    start();
   }
-}, 80);
+},70);
 
-/* TASKS */
-const tasks = [
-  {text:"Klicke alle Bilder an, bei denen das Brautpaar betrunken aussieht 🍻"},
-];
-
-function startCaptcha(){
+/* CAPTCHA */
+function start(){
   document.getElementById("captcha").classList.remove("hidden");
 
-  currentTask = tasks[Math.floor(Math.random()*tasks.length)].text;
-  document.getElementById("taskBox").innerText = currentTask;
+  document.getElementById("taskBox").innerText =
+    "Klicke alle Bilder an, bei denen das Brautpaar betrunken aussieht 🍻";
 
-  renderGrid();
+  render();
 }
 
-/* GRID */
-function renderGrid(){
-  selected = [];
-  let grid = document.getElementById("grid");
-  grid.innerHTML = "";
+function render(){
+  let grid=document.getElementById("grid");
+  grid.innerHTML="";
+  images.sort(()=>Math.random()-0.5);
 
-  let shuffled = images.sort(()=>Math.random()-0.5);
+  images.forEach(img=>{
+    let d=document.createElement("div");
+    d.className="cell";
+    d.style.backgroundImage=`url(${img.src})`;
 
-  shuffled.forEach((img, i)=>{
-    let div = document.createElement("div");
-    div.className="cell";
-    div.style.backgroundImage = `url(${img.src})`;
+    d.onclick=()=>{
 
-    div.onclick = ()=>{
-      div.classList.toggle("selected");
-      img.chosen = !img.chosen;
+      openZoom(img.src);
+
+      img.chosen=!img.chosen;
+      d.classList.toggle("selected");
     };
 
-    grid.appendChild(div);
+    grid.appendChild(d);
   });
 }
 
-/* CHECK */
+/* CHECK + ANTI DOUBLE CLICK */
 function check(){
-  let correct = images.every(img =>
-    (img.drunk && img.chosen) || (!img.drunk && !img.chosen)
-  );
 
-  if(correct){
+  if(Date.now()-lastClick<2000){
+    document.getElementById("msg").innerText="Langsam 😄";
+    return;
+  }
+  lastClick=Date.now();
+
+  let ok=images.every(i=>i.drunk===i.chosen);
+
+  if(ok){
     success();
-  } else {
-    wrongCount++;
+  }else{
+    wrong++;
+    document.getElementById("msg").innerText="Fast 😄 Versuch's nochmal";
+    render();
+  }
 
-    let msgs = [
-      "Fast! Das war wohl der Trauzeuge 😄",
-      "Nicht ganz – aber guter Versuch!",
-      "Der Bräutigam hat protestiert 🤖",
-    ];
-
-    if(wrongCount >= 5){
-      msgs.push("Okay ehrlich… gib dein Bier kurz ab 🍺😄");
-    }
-
-    document.getElementById("msg").innerText =
-      msgs[Math.floor(Math.random()*msgs.length)];
-
-    renderGrid();
+  if(wrong>=5){
+    document.getElementById("msg").innerText="🍺 Gib das Bier kurz ab 😄";
   }
 }
 
@@ -96,28 +86,44 @@ function check(){
 function success(){
   document.getElementById("captcha").classList.add("hidden");
   document.getElementById("success").classList.remove("hidden");
+  document.getElementById("tableView").classList.remove("hidden");
 
   confetti();
 }
 
 /* CONFETTI */
 function confetti(){
-  for(let i=0;i<80;i++){
-    let c = document.createElement("div");
-    c.style.position="fixed";
-    c.style.left=Math.random()*100+"%";
-    c.style.top="-10px";
-    c.style.width="8px";
-    c.style.height="8px";
-    c.style.background=["#ff2e8a","#ff9f6b","#6b7d3a","#e7d3b0"][Math.floor(Math.random()*4)];
-    document.body.appendChild(c);
-
-    let fall = setInterval(()=>{
-      c.style.top = (parseFloat(c.style.top)+2)+"px";
-      if(parseFloat(c.style.top)>window.innerHeight){
-        c.remove();
-        clearInterval(fall);
-      }
-    },10);
-  }
+  window.confetti({
+    particleCount:120,
+    spread:80,
+    origin:{y:0.6}
+  });
 }
+
+/* LIGHTBOX */
+function openZoom(src){
+  document.getElementById("zoomImg").src=src;
+  document.getElementById("lightbox").classList.remove("hidden");
+}
+
+function closeZoom(){
+  document.getElementById("lightbox").classList.add("hidden");
+}
+
+/* TABLE CLICK */
+document.addEventListener("click",e=>{
+  if(e.target.classList.contains("table")){
+    document.getElementById("tableInfo").innerText =
+      "👉 " + e.target.dataset.info;
+  }
+});
+
+/* PARALLAX */
+document.addEventListener("mousemove",e=>{
+  let x=(e.clientX/window.innerWidth-0.5)*2;
+  let y=(e.clientY/window.innerHeight-0.5)*2;
+
+  document.querySelector(".layer-back").style.transform=`translate(${x*10}px,${y*10}px)`;
+  document.querySelector(".layer-mid").style.transform=`translate(${x*20}px,${y*20}px)`;
+  document.querySelector(".layer-front").style.transform=`translate(${x*30}px,${y*30}px)`;
+});
