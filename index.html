@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raffi ❤️ Franzi Hochzeit</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- LOADING -->
+<div id="loading">
+  <div class="loaderBox">
+    <h2>Hochzeitssystem wird gestartet...</h2>
+    <div class="bar"><div class="barFill"></div></div>
+    <p id="loadText">0%</p>
+  </div>
+</div>
+
+<!-- CAPTCHA -->
+<div id="captcha" class="hidden">
+
+  <h1>🤖 Sicherheitsprüfung</h1>
+  <p class="sub">
+    Wir haben ungewöhnliche Aktivitäten festgestellt.<br>
+    Bitte bestätigen Sie, dass Sie kein Hochzeitsroboter sind.
+  </p>
+
+  <div id="taskBox"></div>
+
+  <div id="grid"></div>
+
+  <button onclick="check()">Prüfen</button>
+
+  <p id="msg"></p>
+</div>
+
+<!-- SUCCESS -->
+<div id="success" class="hidden">
+
+  <div id="ringAnim">💍💍</div>
+
+  <h1>Willkommen!</h1>
+  <p>Schön, dass ihr mit Raffi & Franzi feiert ❤️</p>
+
+  <img id="table" src="images/tischplan.png">
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
