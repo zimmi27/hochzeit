@@ -7,14 +7,13 @@
 
 <link rel="stylesheet" href="style.css">
 
-<!-- Konfetti Library -->
+<!-- Konfetti -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 
 <body>
 
-  
-<!-- 🤖 LOADING -->
+<!-- LOADING -->
 <div id="loading">
   <div class="loaderBox">
     <h2>Hochzeitssystem wird gestartet...</h2>
@@ -27,12 +26,13 @@
 <div id="captcha" class="hidden">
 
   <h1>🤖 Sicherheitsprüfung</h1>
+
   <p class="sub">
-    Wir haben ungewöhnliche Aktivitäten festgestellt.<br>
     Bitte bestätigen Sie, dass Sie kein Hochzeitsroboter sind.
   </p>
 
   <div id="taskBox"></div>
+
   <div id="grid"></div>
 
   <button onclick="check()">Prüfen</button>
@@ -42,11 +42,14 @@
 
 <!-- SUCCESS -->
 <div id="success" class="hidden">
+
   <div id="ringAnim">💍💍</div>
+
   <h1>Willkommen!</h1>
   <p>Schön, dass ihr mit Raffi & Franzi feiert ❤️</p>
 
   <div id="tableView" class="hidden">
+
     <p>Interaktiver Tischplan 👇</p>
 
     <div id="tables">
@@ -58,11 +61,11 @@
 
     <p id="tableInfo"></p>
 
-    <img src="images/tischplan.jpg">
+    <img src="images/tischplan.png">
   </div>
 </div>
 
-<!-- 🔍 LIGHTBOX -->
+<!-- LIGHTBOX -->
 <div id="lightbox" class="hidden" onclick="closeZoom()">
   <img id="zoomImg">
 </div>
