@@ -4,12 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Raffi ❤️ Franzi Hochzeit</title>
+
 <link rel="stylesheet" href="style.css">
+
+<!-- Konfetti Library -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
+
 <body>
 
-<!-- LOADING -->
+<!-- 🌄 PARALLAX BACKGROUND -->
+<div id="parallax">
+  <div class="layer layer-back"></div>
+  <div class="layer layer-mid"></div>
+  <div class="layer layer-front"></div>
+</div>
+
+<!-- 🤖 LOADING -->
 <div id="loading">
   <div class="loaderBox">
     <h2>Hochzeitssystem wird gestartet...</h2>
@@ -28,7 +39,6 @@
   </p>
 
   <div id="taskBox"></div>
-
   <div id="grid"></div>
 
   <button onclick="check()">Prüfen</button>
@@ -38,14 +48,29 @@
 
 <!-- SUCCESS -->
 <div id="success" class="hidden">
-
   <div id="ringAnim">💍💍</div>
-
   <h1>Willkommen!</h1>
   <p>Schön, dass ihr mit Raffi & Franzi feiert ❤️</p>
 
-  <img id="table" src="images/tischplan.jpg">
+  <div id="tableView" class="hidden">
+    <p>Interaktiver Tischplan 👇</p>
 
+    <div id="tables">
+      <div class="table" data-info="Familie & enge Freunde">Tisch 1</div>
+      <div class="table" data-info="Freunde Braut">Tisch 2</div>
+      <div class="table" data-info="Freunde Bräutigam">Tisch 3</div>
+      <div class="table" data-info="Kollegen & Bekannte">Tisch 4</div>
+    </div>
+
+    <p id="tableInfo"></p>
+
+    <img src="images/tischplan.png">
+  </div>
+</div>
+
+<!-- 🔍 LIGHTBOX -->
+<div id="lightbox" class="hidden" onclick="closeZoom()">
+  <img id="zoomImg">
 </div>
 
 <script src="script.js"></script>
