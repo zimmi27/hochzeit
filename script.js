@@ -14,17 +14,26 @@ let lastClick=0;
 let wrong=0;
 
 /* LOADING */
-let p=0;
-let load=setInterval(()=>{
-  p+=5;
-  document.querySelector(".barFill").style.width=p+"%";
-  document.getElementById("loadText").innerText=p+"%";
-  if(p>=100){
+let p = 0;
+
+let load = setInterval(() => {
+  p += 5;
+
+  let bar = document.querySelector(".barFill");
+  if (bar) bar.style.width = p + "%";
+
+  let text = document.getElementById("loadText");
+  if (text) text.innerText = p + "%";
+
+  if (p >= 100) {
     clearInterval(load);
-    document.getElementById("loading").style.display="none";
+
+    const loading = document.getElementById("loading");
+    if (loading) loading.style.display = "none";
+
     start();
   }
-},70);
+}, 60);
 
 /* START */
 function start(){
