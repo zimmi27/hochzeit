@@ -1,4 +1,4 @@
-let images = [
+let images=[
   {src:"images/1.jpg", drunk:true, chosen:false},
   {src:"images/2.jpg", drunk:true, chosen:false},
   {src:"images/3.jpg", drunk:true, chosen:false},
@@ -10,8 +10,8 @@ let images = [
   {src:"images/9.jpg", drunk:true, chosen:false},
 ];
 
-let lastClick = 0;
-let wrong = 0;
+let lastClick=0;
+let wrong=0;
 
 /* LOADING */
 let p=0;
@@ -26,7 +26,7 @@ let load=setInterval(()=>{
   }
 },70);
 
-/* CAPTCHA */
+/* START */
 function start(){
   document.getElementById("captcha").classList.remove("hidden");
 
@@ -36,9 +36,11 @@ function start(){
   render();
 }
 
+/* GRID */
 function render(){
   let grid=document.getElementById("grid");
   grid.innerHTML="";
+
   images.sort(()=>Math.random()-0.5);
 
   images.forEach(img=>{
@@ -47,18 +49,16 @@ function render(){
     d.style.backgroundImage=`url(${img.src})`;
 
     d.onclick=()=>{
-
-      openZoom(img.src);
-
       img.chosen=!img.chosen;
       d.classList.toggle("selected");
+      openZoom(img.src);
     };
 
     grid.appendChild(d);
   });
 }
 
-/* CHECK + ANTI DOUBLE CLICK */
+/* CHECK */
 function check(){
 
   if(Date.now()-lastClick<2000){
@@ -78,7 +78,7 @@ function check(){
   }
 
   if(wrong>=5){
-    document.getElementById("msg").innerText="🍺 Gib das Bier kurz ab 😄";
+    document.getElementById("msg").innerText="🍺 Bierpause 😄";
   }
 }
 
@@ -87,7 +87,6 @@ function success(){
   document.getElementById("captcha").classList.add("hidden");
   document.getElementById("success").classList.remove("hidden");
   document.getElementById("tableView").classList.remove("hidden");
-
   confetti();
 }
 
@@ -111,19 +110,9 @@ function closeZoom(){
 }
 
 /* TABLE CLICK */
-document.addEventListener("click",e=>{
+document.addEventListener("click",(e)=>{
   if(e.target.classList.contains("table")){
     document.getElementById("tableInfo").innerText =
       "👉 " + e.target.dataset.info;
   }
-});
-
-/* PARALLAX */
-document.addEventListener("mousemove",e=>{
-  let x=(e.clientX/window.innerWidth-0.5)*2;
-  let y=(e.clientY/window.innerHeight-0.5)*2;
-
-  document.querySelector(".layer-back").style.transform=`translate(${x*10}px,${y*10}px)`;
-  document.querySelector(".layer-mid").style.transform=`translate(${x*20}px,${y*20}px)`;
-  document.querySelector(".layer-front").style.transform=`translate(${x*30}px,${y*30}px)`;
 });
