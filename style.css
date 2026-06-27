@@ -12,7 +12,6 @@ body{
   background:var(--cream);
   color:#333;
   text-align:center;
-  overflow-x:hidden;
 }
 
 /* LOADING */
@@ -128,4 +127,3 @@ button{
   max-height:80%;
   border-radius:10px;
 }
-
