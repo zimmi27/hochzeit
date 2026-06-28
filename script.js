@@ -102,22 +102,28 @@ function success(){
 
 /* CONFETTI */
 function confetti(){
-  for(let i=0;i<80;i++){
-    let c = document.createElement("div");
-    c.style.position="fixed";
-    c.style.left=Math.random()*100+"%";
-    c.style.top="-10px";
-    c.style.width="8px";
-    c.style.height="8px";
-    c.style.background=["#ff2e8a","#ff9f6b","#6b7d3a","#e7d3b0"][Math.floor(Math.random()*4)];
-    document.body.appendChild(c);
 
-    let fall = setInterval(()=>{
-      c.style.top = (parseFloat(c.style.top)+2)+"px";
-      if(parseFloat(c.style.top)>window.innerHeight){
-        c.remove();
-        clearInterval(fall);
-      }
-    },10);
-  }
+    const colors = [
+        "#6b7d3a",
+        "#ff2e8a",
+        "#ff9f6b",
+        "#e7d3b0"
+    ];
+
+    confetti({
+        particleCount:180,
+        spread:100,
+        startVelocity:60,
+        origin:{x:0,y:0.8},
+        colors:colors
+    });
+
+    confetti({
+        particleCount:180,
+        spread:100,
+        startVelocity:60,
+        origin:{x:1,y:0.8},
+        colors:colors
+    });
+
 }
