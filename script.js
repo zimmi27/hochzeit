@@ -121,19 +121,3 @@ function confetti(){
     },10);
   }
 }
-
-function showTable(title,text){
-
-    document.getElementById("popupTitle").innerHTML=title;
-
-    document.getElementById("popupText").innerHTML=text;
-
-    document.getElementById("popup").classList.remove("hidden");
-
-}
-
-function closePopup(){
-
-    document.getElementById("popup").classList.add("hidden");
-
-}
