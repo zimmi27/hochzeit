@@ -43,7 +43,29 @@
   <h1>Willkommen!</h1>
   <p>Schön, dass ihr mit Raffi & Franzi feiert ❤️</p>
 
-  <img id="table" src="images/tischplan.jpg">
+  <div class="plan">
+
+    <img src="images/tischplan.png" id="tablePlan">
+
+    <!-- Klickflächen -->
+    <div class="tableHotspot t1" onclick="showTable('Tisch 1','Familie Raffi')"></div>
+
+    <div class="tableHotspot t2" onclick="showTable('Tisch 2','Familie Franzi')"></div>
+
+    <div class="tableHotspot t3" onclick="showTable('Tisch 3','Freunde')"></div>
+
+    <div class="tableHotspot t4" onclick="showTable('Tisch 4','Kollegen')"></div>
+
+</div>
+
+<div id="popup" class="hidden">
+    <div class="popupBox">
+        <h2 id="popupTitle"></h2>
+        <p id="popupText"></p>
+
+        <button onclick="closePopup()">Schließen</button>
+    </div>
+</div>
 
 </div>
 
