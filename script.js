@@ -101,29 +101,41 @@ function success(){
 }
 
 /* CONFETTI */
-function confetti(){
+function confetti() {
+
+    const duration = 4000;
+    const end = Date.now() + duration;
 
     const colors = [
-        "#6b7d3a",
-        "#ff2e8a",
-        "#ff9f6b",
-        "#e7d3b0"
+        "#6b7d3a", // Oliv
+        "#ff2e8a", // Pink
+        "#ff9f6b", // Apricot
+        "#e7d3b0", // Sand
+        "#ffffff"
     ];
 
-    confetti({
-        particleCount:180,
-        spread:100,
-        startVelocity:60,
-        origin:{x:0,y:0.8},
-        colors:colors
-    });
+    (function frame() {
 
-    confetti({
-        particleCount:180,
-        spread:100,
-        startVelocity:60,
-        origin:{x:1,y:0.8},
-        colors:colors
-    });
+        confetti({
+            particleCount: 4,
+            angle: 60,
+            spread: 60,
+            origin: { x: 0 },
+            colors: colors
+        });
+
+        confetti({
+            particleCount: 4,
+            angle: 120,
+            spread: 60,
+            origin: { x: 1 },
+            colors: colors
+        });
+
+        if (Date.now() < end) {
+            requestAnimationFrame(frame);
+        }
+
+    })();
 
 }
