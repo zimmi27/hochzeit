@@ -1,13 +1,13 @@
 const images = [
-  {src:"images/1.jpg", drunk:false},
-  {src:"images/2.jpg", drunk:false},
-  {src:"images/3.jpg", drunk:false},
-  {src:"images/4.jpg", drunk:false},
-  {src:"images/5.jpg", drunk:false},
-  {src:"images/6.jpg", drunk:false},
-  {src:"images/7.jpg", drunk:false},
-  {src:"images/8.jpg", drunk:false},
-  {src:"images/9.jpg", drunk:false},
+  {src:"images/betrunken1.jpg", drunk:true},
+  {src:"images/betrunken2.jpg", drunk:true},
+  {src:"images/betrunken3.jpg", drunk:true},
+  {src:"images/betrunken4.jpg", drunk:true},
+  {src:"images/nüchtern1.jpg", drunk:false},
+  {src:"images/nüchtern2.jpg", drunk:false},
+  {src:"images/nüchtern3.jpg", drunk:false},
+  {src:"images/nüchtern4.jpg", drunk:false},
+  {src:"images/nüchtern5.jpg", drunk:false},
 ];
 
 let selected = [];
