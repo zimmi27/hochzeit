@@ -55,6 +55,13 @@ body {
   color:var(--olive);
 }
 
+.hint,
+.downloadHint,
+.tableHint {
+  color: #777;
+  font-size: 14px;
+}
+
 #grid {
   display:grid;
   grid-template-columns:repeat(3,1fr);
