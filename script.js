@@ -36,6 +36,8 @@ const tasks = [
 function startCaptcha(){
   document.getElementById("captcha").classList.remove("hidden");
 
+  document.getElementById("msg").innerText = "";
+
   currentTask = tasks[Math.floor(Math.random()*tasks.length)].text;
   document.getElementById("taskBox").innerText = currentTask;
 
@@ -44,24 +46,38 @@ function startCaptcha(){
 
 /* GRID */
 function renderGrid(){
-  selected = [];
+
+  // Alle vorherigen Auswahlzustände zurücksetzen
+  images.forEach(img => {
+    img.chosen = false;
+  });
+
   let grid = document.getElementById("grid");
   grid.innerHTML = "";
+  
 
-  let shuffled = images.sort(()=>Math.random()-0.5);
+  // Kopie des Arrays mischen, damit das Original nicht verändert wird
+  let shuffled = [...images].sort(() => Math.random() - 0.5);
+  
+shuffled.forEach((img) => {
 
-  shuffled.forEach((img, i)=>{
-    let div = document.createElement("div");
-    div.className="cell";
-    div.style.backgroundImage = `url(${img.src})`;
+  let div = document.createElement("div");
+  div.className = "cell";
+  div.style.backgroundImage = `url(${img.src})`;
 
-    div.onclick = ()=>{
-      div.classList.toggle("selected");
-      img.chosen = !img.chosen;
-    };
+  div.onclick = () => {
 
-    grid.appendChild(div);
-  });
+    img.chosen = !img.chosen;
+
+    if (img.chosen) {
+      div.classList.add("selected");
+    } else {
+      div.classList.remove("selected");
+    }
+  };
+
+  grid.appendChild(div);
+});
 }
 
 /* CHECK */
