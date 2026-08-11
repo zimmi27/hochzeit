@@ -47,51 +47,57 @@ function startCaptcha(){
 /* GRID */
 function renderGrid(){
 
-  // Alle vorherigen Auswahlzustände zurücksetzen
+  // Auswahl vom vorherigen Versuch vollständig löschen
   images.forEach(img => {
     img.chosen = false;
   });
 
-  let grid = document.getElementById("grid");
+  const grid = document.getElementById("grid");
   grid.innerHTML = "";
-  
 
-  // Kopie des Arrays mischen, damit das Original nicht verändert wird
-  let shuffled = [...images].sort(() => Math.random() - 0.5);
-  
-shuffled.forEach((img) => {
+  // Nicht das Originalarray verändern
+  const shuffled = [...images].sort(() => Math.random() - 0.5);
 
-  let div = document.createElement("div");
-  div.className = "cell";
-  div.style.backgroundImage = `url(${img.src})`;
+  shuffled.forEach((img) => {
 
-  div.onclick = () => {
+    const div = document.createElement("div");
 
-    img.chosen = !img.chosen;
+    div.className = "cell";
+    div.style.backgroundImage = `url(${img.src})`;
 
-    if (img.chosen) {
-      div.classList.add("selected");
-    } else {
-      div.classList.remove("selected");
-    }
-  };
+    div.onclick = () => {
 
-  grid.appendChild(div);
-});
+      img.chosen = !img.chosen;
+
+      if (img.chosen) {
+        div.classList.add("selected");
+      } else {
+        div.classList.remove("selected");
+      }
+    };
+
+    grid.appendChild(div);
+  });
 }
+
 
 /* CHECK */
 function check(){
-  let correct = images.every(img =>
-    (img.drunk && img.chosen) || (!img.drunk && !img.chosen)
+
+  const correct = images.every(img =>
+    (img.drunk && img.chosen === true) ||
+    (!img.drunk && img.chosen !== true)
   );
 
   if(correct){
+
     success();
+
   } else {
+
     wrongCount++;
 
-    let msgs = [
+    const msgs = [
       "Fast! Das war wohl der Trauzeuge 😄",
       "Nicht ganz – aber guter Versuch!",
       "Der Bräutigam hat protestiert 🤖",
@@ -101,57 +107,62 @@ function check(){
       msgs.push("Okay ehrlich… gib dein Bier kurz ab 🍺😄");
     }
 
-    document.getElementById("msg").innerText =
-      msgs[Math.floor(Math.random()*msgs.length)];
+    const message =
+      msgs[Math.floor(Math.random() * msgs.length)];
 
+    // Neue Bilder und Auswahlzustände erzeugen
     renderGrid();
+
+    // Fehlermeldung DANACH anzeigen
+    document.getElementById("msg").innerText = message;
   }
 }
 
+
 /* SUCCESS */
 function success(){
+
   document.getElementById("captcha").classList.add("hidden");
   document.getElementById("success").classList.remove("hidden");
 
-  confetti();
+  startConfetti();
 }
 
 /* CONFETTI */
-function confetti() {
+function startConfetti() {
 
-    const duration = 4000;
-    const end = Date.now() + duration;
+  const duration = 4000;
+  const end = Date.now() + duration;
 
-    const colors = [
-        "#6b7d3a", // Oliv
-        "#ff2e8a", // Pink
-        "#ff9f6b", // Apricot
-        "#e7d3b0", // Sand
-        "#ffffff"
-    ];
+  const colors = [
+    "#6b7d3a",
+    "#ff2e8a",
+    "#ff9f6b",
+    "#e7d3b0",
+    "#ffffff"
+  ];
 
-    (function frame() {
+  (function frame() {
 
-        confetti({
-            particleCount: 4,
-            angle: 60,
-            spread: 60,
-            origin: { x: 0 },
-            colors: colors
-        });
+    confetti({
+      particleCount: 4,
+      angle: 60,
+      spread: 60,
+      origin: { x: 0 },
+      colors: colors
+    });
 
-        confetti({
-            particleCount: 4,
-            angle: 120,
-            spread: 60,
-            origin: { x: 1 },
-            colors: colors
-        });
+    confetti({
+      particleCount: 4,
+      angle: 120,
+      spread: 60,
+      origin: { x: 1 },
+      colors: colors
+    });
 
-        if (Date.now() < end) {
-            requestAnimationFrame(frame);
-        }
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
 
-    })();
-
+  })();
 }
